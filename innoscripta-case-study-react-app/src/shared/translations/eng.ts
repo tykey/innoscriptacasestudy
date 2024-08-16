@@ -5,6 +5,11 @@ const eng = {
       select_country: 'Please, select your country:',
     },
   },
+  components: {
+    news: {
+      loading: 'Loading news...',
+    },
+  },
 }
 
 export default eng

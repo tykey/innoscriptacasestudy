@@ -13,8 +13,8 @@ export const HomepageWrapper = styled.div`
   justify-content: start;
   align-items: start;
   gap: 20px;
-  flex: 1 0 auto;
-  padding: 10px;
+  flex: 1 1 auto;
+  padding: 15px;
   box-sizing: border-box;
 `
 
