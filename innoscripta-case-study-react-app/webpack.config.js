@@ -2,6 +2,9 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 
+const NEWS_API_ORG_KEY = '39a4b6fbeb6f4c8ab9df94b8cbe4a32d'
+const THE_GUARDIAN_KEY = '723b1bd6-544b-4982-b02e-dfe40754abbf'
+
 module.exports = {
   entry: './src/index.tsx',
   output: {
@@ -12,6 +15,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public', 'index.html'),
       favicon: path.join(__dirname, 'public', 'favicon.ico'),
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NEWS_API_ORG_KEY': JSON.stringify(NEWS_API_ORG_KEY),
     }),
   ],
   devServer: {
