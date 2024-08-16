@@ -1,25 +1,16 @@
+import { COUNTRIES } from '../../shared/constants/misc'
+import { HOME_PATH } from '../../shared/constants/paths'
 import { Country } from '../../shared/constants/types'
 import { BoldSpan, DefaultSpan } from '../../shared/styles/General.styled'
 import eng from '../../shared/translations/eng'
 import { FlagsWrapper, LandingPageWrapper } from './LandingPage.styled'
-import UKSvg from '../../shared/assets/flags/uk.svg'
-import GermanySvg from '../../shared/assets/flags/de.svg'
-import { DE_PATH, UK_PATH } from '../../shared/constants/paths'
-
-const COUNTRIES: Country[] = [
-  {
-    icon: UKSvg,
-    endpoint: UK_PATH,
-  },
-  {
-    icon: GermanySvg,
-    endpoint: DE_PATH,
-  },
-]
+import { useNavigate } from 'react-router-dom'
 
 const LandingPage = () => {
+  const navigate = useNavigate()
+
   const onClickCountry = (clickedCountry: Country) => {
-    alert(`clicked ${clickedCountry.endpoint}`)
+    navigate(`${HOME_PATH}/${clickedCountry.endpoint}`, { replace: true })
   }
 
   return (
