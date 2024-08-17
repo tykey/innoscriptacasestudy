@@ -3,6 +3,7 @@ import { isValidLocation } from '../../shared/constants/misc'
 import { DefaultSpan } from '../../shared/styles/General.styled'
 import { LANDING_PAGE_PATH } from '../../shared/constants/paths'
 import {
+  FilterIconWrapper,
   HiddenWrapper,
   HomepageHeader,
   HomepageHeaderButton,
@@ -31,6 +32,8 @@ import {
 import { getMostViewedNYTimesAxios } from '../../shared/apis/nytimes/http'
 import ManualInput from '../../shared/components/input/manualInput/ManualInput'
 import SearchIcon from '../../shared/assets/icons/search.svg'
+import FilterIcon from '../../shared/assets/icons/filter.svg'
+import FilterBox from '../../shared/components/filterBox/FilterBox'
 
 const SECTIONS: Section[] = [
   {
@@ -69,6 +72,9 @@ const Homepage = () => {
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [searchInput, setSearchInput] = useState<string>('')
   const inputRef = useRef(null)
+
+  // filter box
+  const [showFilterBox, setShowFilterBox] = useState<boolean>(false)
 
   const getTrendingNews = () => {
     getEverythingAxios(sources, NUMBER_OF_ARTICLES, SORT_BY)
@@ -146,6 +152,10 @@ const Homepage = () => {
     setShowSearch((prev) => !prev)
   }
 
+  const onClickFilter = () => {
+    setShowFilterBox((prev) => !prev)
+  }
+
   useEffect(() => {
     getSources()
   }, [])
@@ -191,9 +201,16 @@ const Homepage = () => {
           <SearchIconWrapper onClick={onClickSearch} isClicked={showSearch}>
             <SearchIcon />
           </SearchIconWrapper>
+          <FilterIconWrapper onClick={onClickFilter}>
+            <FilterIcon />
+          </FilterIconWrapper>
         </SearchWrapper>
       </HomepageHeader>
-      <NewsSlider isLoading={isLoadingNews} news={news} />
+      <NewsSlider
+        isLoading={isLoadingNews}
+        news={news}
+        showFilterBox={showFilterBox}
+      />
     </HomepageWrapper>
   )
 }

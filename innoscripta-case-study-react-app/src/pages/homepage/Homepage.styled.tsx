@@ -17,8 +17,9 @@ export const HomepageWrapper = styled.div`
   align-items: start;
   gap: 20px;
   flex: 1 1 auto;
-  padding: 15px;
+  padding: 15px 0;
   box-sizing: border-box;
+  position: relative;
 `
 
 export const HomepageHeader = styled.div`
@@ -27,7 +28,7 @@ export const HomepageHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 10px;
+  padding: 0 20px;
   box-sizing: border-box;
 `
 export const HomepageSectionsDiv = styled.div`
@@ -85,7 +86,7 @@ type SearchIconWrapperProps = {
 export const SearchIconWrapper = styled.div<SearchIconWrapperProps>`
   position: absolute;
   cursor: pointer;
-  right: 0;
+  right: 53px;
   z-index: 10;
 
   > svg {
@@ -96,5 +97,13 @@ export const SearchIconWrapper = styled.div<SearchIconWrapperProps>`
     &:hover {
       fill: ${(props) => (props.isClicked ? INNO_MAIN_COLOR : 'white')};
     }
+  }
+`
+export const FilterIconWrapper = styled.div`
+  cursor: pointer;
+
+  > svg {
+    width: 2em;
+    fill: white;
   }
 `

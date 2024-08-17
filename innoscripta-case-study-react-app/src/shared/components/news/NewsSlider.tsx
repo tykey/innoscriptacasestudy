@@ -21,13 +21,15 @@ import Progress from '../graphics/progress/Progress'
 import DefaultButton from '../buttons/defaultButton/DefaultButton'
 import { Article, NewsAPIOrgResponse } from '../../constants/types'
 import { redirectToUrl } from '../../constants/util'
+import FilterBox from '../filterBox/FilterBox'
 
 type NewsSliderProps = {
   isLoading: boolean
   news: NewsAPIOrgResponse
+  showFilterBox: boolean
 }
 
-const NewsSlider = ({ isLoading, news }: NewsSliderProps) => {
+const NewsSlider = ({ isLoading, news, showFilterBox }: NewsSliderProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
   const [currentNewsIndex, setCurrentNewsIndex] = useState<number>(0)
@@ -84,6 +86,7 @@ const NewsSlider = ({ isLoading, news }: NewsSliderProps) => {
     <NewsWrapper isVisible={isVisible}>
       <FadedDivLeft />
       <FadedDivRight />
+      <FilterBox isVisible={showFilterBox} />
       <SliderWrapper ref={sliderRef}>
         {news?.articles.map((article: Article, articleIndex: number) => {
           return (
