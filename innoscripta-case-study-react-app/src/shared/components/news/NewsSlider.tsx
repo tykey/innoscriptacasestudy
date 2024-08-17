@@ -20,6 +20,7 @@ import {
 import Progress from '../graphics/progress/Progress'
 import DefaultButton from '../buttons/defaultButton/DefaultButton'
 import { Article, NewsAPIOrgResponse } from '../../constants/types'
+import { redirectToUrl } from '../../constants/util'
 
 type NewsSliderProps = {
   isLoading: boolean
@@ -90,12 +91,16 @@ const NewsSlider = ({ isLoading, news }: NewsSliderProps) => {
               <ArticleDiv>
                 <ArticleHeaderDiv>
                   <BoldSpan>{article.title}</BoldSpan>
-                  <DefaultSpan>
-                    {`${article.source ? `${article.source.name} - ` : ''} ${new Date(article.publishedAt).toLocaleDateString()}`}
+                  <DefaultSpan fontSize="0.9em">
+                    {`${article.source.name} - ${new Date(article.publishedAt).toLocaleDateString()}`}
                   </DefaultSpan>
                 </ArticleHeaderDiv>
-                <DefaultSpan
-                  dangerouslySetInnerHTML={{ __html: article.content }}
+                <DefaultButton
+                  text={eng.components.news.view_full_article(
+                    article.source.name
+                  )}
+                  onClick={() => redirectToUrl(article.url)}
+                  fontSize="0.9em"
                 />
               </ArticleDiv>
             </SingleNewsWrapper>

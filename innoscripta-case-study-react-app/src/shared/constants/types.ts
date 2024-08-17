@@ -18,7 +18,7 @@ export type Article = {
   content?: string
   description?: string
   publishedAt: Date
-  source?: SourceNewsAPIOrg
+  source: SourceNewsAPIOrg
   title: string
   url: string
   urlToImage?: string

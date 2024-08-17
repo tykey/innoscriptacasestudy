@@ -19,8 +19,12 @@ import { NewsAPIOrgResponse, Section } from '../../shared/constants/types'
 import {
   getAllTheGuardianAxios,
   getTheGuardianSingleItem,
-} from '../../shared/apis/newsapiorg/theguardian/http'
-import { mapTheGuardianNewsToNews } from '../../shared/constants/util'
+} from '../../shared/apis/theguardian/http'
+import {
+  mapNYTimesNewsToNews,
+  mapTheGuardianNewsToNews,
+} from '../../shared/constants/util'
+import { getMostViewedNYTimesAxios } from '../../shared/apis/nytimes/http'
 
 const SECTIONS: Section[] = [
   {
@@ -31,10 +35,20 @@ const SECTIONS: Section[] = [
     label: 'The Guardian',
     code: 'theguardian',
   },
+  {
+    label: 'The New York Times',
+    code: 'nytimes',
+  },
 ]
 
 const NUMBER_OF_ARTICLES = 10
 const SORT_BY = 'popularity'
+const NY_TIMES_PERIOD = 7
+const EMPTY_NEWS: NewsAPIOrgResponse = {
+  totalResults: 0,
+  articles: [],
+  status: 'err',
+}
 
 const Homepage = () => {
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number>(0)
@@ -52,7 +66,7 @@ const Homepage = () => {
         setNews(res.data)
       })
       .catch(() => {
-        setNews(null)
+        setNews(EMPTY_NEWS)
       })
       .finally(() => {
         setIsLoadingNews(false)
@@ -65,7 +79,20 @@ const Homepage = () => {
         setNews(mapTheGuardianNewsToNews(res.data.response))
       })
       .catch(() => {
-        setNews(null)
+        setNews(EMPTY_NEWS)
+      })
+      .finally(() => {
+        setIsLoadingNews(false)
+      })
+  }
+
+  const getNYTimesNews = () => {
+    getMostViewedNYTimesAxios(NY_TIMES_PERIOD)
+      .then((res: any) => {
+        setNews(mapNYTimesNewsToNews(NUMBER_OF_ARTICLES, res.data))
+      })
+      .catch(() => {
+        setNews(EMPTY_NEWS)
       })
       .finally(() => {
         setIsLoadingNews(false)
@@ -82,6 +109,9 @@ const Homepage = () => {
         break
       case 'theguardian':
         getTheGuardianNews()
+        break
+      case 'nytimes':
+        getNYTimesNews()
         break
       default:
         alert('Unknown type of news!')

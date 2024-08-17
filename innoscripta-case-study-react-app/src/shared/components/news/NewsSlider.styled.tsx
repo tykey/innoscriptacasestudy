@@ -94,7 +94,7 @@ export const ArticleDiv = styled.div`
   align-items: start;
   flex: 0 0 auto;
   font-size: 1.2em;
-  gap: 15px;
+  gap: 20px;
 `
 
 export const ArticleHeaderDiv = styled.div`
@@ -102,7 +102,7 @@ export const ArticleHeaderDiv = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  gap: 3px;
+  gap: 4px;
 `
 
 export const NavigationButtonsDiv = styled.div`
