@@ -15,17 +15,20 @@ export const GeneralWrapper = styled.div`
 type SpanProps = {
   fontSize?: string
   color?: string
+  cursor?: string
 }
 
 export const DefaultSpan = styled.span<SpanProps>`
   font-size: ${(props) => props.fontSize ?? '1em'};
   color: ${(props) => props.color ?? 'inherit'};
+  cursor: ${(props) => props.cursor ?? 'inherit'};
   font-weight: 400;
 `
 
 export const BoldSpan = styled.span<SpanProps>`
   font-size: ${(props) => props.fontSize ?? '1em'};
   color: ${(props) => props.color ?? 'inherit'};
+  cursor: ${(props) => props.cursor ?? 'inherit'};
   font-weight: 600;
 `
 export const LoaderWrapperCentered = styled.div`

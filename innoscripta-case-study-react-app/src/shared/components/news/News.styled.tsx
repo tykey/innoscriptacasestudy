@@ -21,6 +21,8 @@ export const NewsWrapper = styled.div<NewsWrapperProps>`
   justify-content: start;
   align-items: center;
   width: 100%;
+  height: 80%;
+  gap: 20px;
   flex: 1 0 auto;
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transition: ${CHANGE_TRANSITION};
@@ -64,7 +66,7 @@ export const SliderWrapper = styled.div`
   flex-direction: row;
   justify-content: start;
   align-items: start;
-  height: calc(100% - ${SLIDER_FAKE_PADDING_VERTICAL});
+  height: 100%;
   width: calc(100% - ${SLIDER_FAKE_PADDING_HORIZONTAL});
   flex: 0 1 auto;
   gap: 10px;
@@ -77,7 +79,7 @@ export const SingleNewsWrapper = styled.div`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex: 0 0 100%;
 `
@@ -85,7 +87,7 @@ export const SingleNewsWrapper = styled.div`
 export const SingleNewsDiv = styled.div`
   display: flex;
   width: 80%;
-  height: 80%;
+  height: 100%;
   flex-direction: column;
   justify-content: start;
   align-items: start;
@@ -95,4 +97,24 @@ export const SingleNewsDiv = styled.div`
   padding: 20px;
   box-sizing: border-box;
   flex: 0 0 auto;
+`
+export const NavigationButtonsDiv = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`
+
+type PreviousSpanWrapperProps = {
+  isVisible: boolean
+}
+
+export const PreviousSpanWrapper = styled.div<PreviousSpanWrapperProps>`
+  position: absolute;
+  right: calc(100% + 10px);
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: ${CHANGE_TRANSITION};
+  pointer-events: ${(props) => (props.isVisible ? 'all' : 'none')};
 `

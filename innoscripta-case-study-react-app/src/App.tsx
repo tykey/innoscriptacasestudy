@@ -12,9 +12,9 @@ const App = () => {
       <ContentWrapper>
         <Routes>
           <Route path={LANDING_PAGE_PATH} element={<LandingPage />} />
-          <Route path={HOME_PATH + '/*'} element={<Homepage />} />
-          <Route path="/" element={<Navigate to={LANDING_PAGE_PATH} />} />
-          <Route path="/*" element={<Navigate to={LANDING_PAGE_PATH} />} />
+          <Route path={HOME_PATH} element={<Homepage />} />
+          <Route path="/" element={<Navigate to={HOME_PATH} />} />
+          <Route path="/*" element={<Navigate to={HOME_PATH} />} />
         </Routes>
       </ContentWrapper>
     </>

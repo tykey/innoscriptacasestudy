@@ -10,12 +10,15 @@ import CircularLoader from './loaders/CircularLoader'
 import {
   FadedDivLeft,
   FadedDivRight,
+  NavigationButtonsDiv,
   NewsWrapper,
+  PreviousSpanWrapper,
   SingleNewsDiv,
   SingleNewsWrapper,
   SliderWrapper,
 } from './News.styled'
 import Progress from '../graphics/progress/Progress'
+import DefaultButton from '../buttons/defaultButton/DefaultButton'
 
 type NewsProps = {
   isLoading: boolean
@@ -85,6 +88,18 @@ const News = ({ isLoading, news }: NewsProps) => {
         selectedIndex={currentNewsIndex}
         onClick={onClickSpecificNews}
       />
+      <NavigationButtonsDiv>
+        <PreviousSpanWrapper isVisible={currentNewsIndex > 0}>
+          <DefaultSpan
+            cursor="pointer"
+            fontSize="0.9em"
+            onClick={onClickPrevious}
+          >
+            {eng.navigation.previous}
+          </DefaultSpan>
+        </PreviousSpanWrapper>
+        <DefaultButton text={eng.navigation.next} onClick={onClickNext} />
+      </NavigationButtonsDiv>
     </NewsWrapper>
   )
 }

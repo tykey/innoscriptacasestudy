@@ -10,6 +10,10 @@ const eng = {
       loading: 'Loading news...',
     },
   },
+  navigation: {
+    next: 'Next',
+    previous: 'Previous',
+  },
 }
 
 export default eng

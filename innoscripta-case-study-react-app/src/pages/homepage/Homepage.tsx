@@ -24,8 +24,8 @@ const SECTIONS: Section[] = [
 ]
 
 const Homepage = () => {
-  const splitPath: string[] = window.location.pathname.split('/')
-  const selectedLocation = splitPath[splitPath.length - 1]
+  // const splitPath: string[] = window.location.pathname.split('/')
+  // const selectedLocation = splitPath[splitPath.length - 1]
 
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number>(0)
 
@@ -38,8 +38,8 @@ const Homepage = () => {
     }, 1000)
   }, [])
 
-  if (!isValidLocation(selectedLocation))
-    return <Navigate to={LANDING_PAGE_PATH} replace />
+  // if (!isValidLocation(selectedLocation))
+  //   return <Navigate to={LANDING_PAGE_PATH} replace />
 
   return (
     <HomepageWrapper>
