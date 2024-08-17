@@ -3,11 +3,15 @@ import { isValidLocation } from '../../shared/constants/misc'
 import { DefaultSpan } from '../../shared/styles/General.styled'
 import { LANDING_PAGE_PATH } from '../../shared/constants/paths'
 import {
+  HiddenWrapper,
   HomepageHeader,
   HomepageHeaderButton,
+  HomepageSectionsDiv,
   HomepageWrapper,
+  SearchIconWrapper,
+  SearchWrapper,
 } from './Homepage.styled'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import LandingPage from '../landingPage/LandingPage'
 import NewsSlider from '../../shared/components/news/NewsSlider'
 import {
@@ -25,6 +29,8 @@ import {
   mapTheGuardianNewsToNews,
 } from '../../shared/constants/util'
 import { getMostViewedNYTimesAxios } from '../../shared/apis/nytimes/http'
+import ManualInput from '../../shared/components/input/manualInput/ManualInput'
+import SearchIcon from '../../shared/assets/icons/search.svg'
 
 const SECTIONS: Section[] = [
   {
@@ -58,6 +64,11 @@ const Homepage = () => {
   const [isLoadingNews, setIsLoadingNews] = useState<boolean>(true)
   const [sources, setSources] = useState<string[]>([])
   const [news, setNews] = useState<NewsAPIOrgResponse>(null)
+
+  // search
+  const [showSearch, setShowSearch] = useState<boolean>(false)
+  const [searchInput, setSearchInput] = useState<string>('')
+  const inputRef = useRef(null)
 
   const getTrendingNews = () => {
     getEverythingAxios(sources, NUMBER_OF_ARTICLES, SORT_BY)
@@ -131,6 +142,10 @@ const Homepage = () => {
       })
   }
 
+  const onClickSearch = () => {
+    setShowSearch((prev) => !prev)
+  }
+
   useEffect(() => {
     getSources()
   }, [])
@@ -139,20 +154,44 @@ const Homepage = () => {
     if (sources.length > 0) getNews()
   }, [selectedSectionIndex, sources])
 
+  // focus search
+  useEffect(() => {
+    if (showSearch && inputRef && inputRef.current) {
+      const inputElem = inputRef.current.getElementsByTagName('input')[0]
+
+      inputElem.focus()
+    } else if (!showSearch) setSearchInput('')
+  }, [showSearch])
+
   return (
     <HomepageWrapper>
       <HomepageHeader>
-        {SECTIONS.map((section: Section, sectionIndex: number) => {
-          return (
-            <HomepageHeaderButton
-              key={sectionIndex}
-              isSelected={sectionIndex === selectedSectionIndex}
-              onClick={() => setSelectedSectionIndex(sectionIndex)}
-            >
-              {section.label}
-            </HomepageHeaderButton>
-          )
-        })}
+        <HomepageSectionsDiv>
+          {SECTIONS.map((section: Section, sectionIndex: number) => {
+            return (
+              <HomepageHeaderButton
+                key={sectionIndex}
+                isSelected={sectionIndex === selectedSectionIndex}
+                onClick={() => setSelectedSectionIndex(sectionIndex)}
+              >
+                {section.label}
+              </HomepageHeaderButton>
+            )
+          })}
+        </HomepageSectionsDiv>
+        <SearchWrapper>
+          <HiddenWrapper isHidden={!showSearch} ref={inputRef}>
+            <ManualInput
+              type="text"
+              defaultValue={searchInput}
+              isDisabled={!showSearch}
+              onChange={(value: any) => setSearchInput(value)}
+            />
+          </HiddenWrapper>
+          <SearchIconWrapper onClick={onClickSearch} isClicked={showSearch}>
+            <SearchIcon />
+          </SearchIconWrapper>
+        </SearchWrapper>
       </HomepageHeader>
       <NewsSlider isLoading={isLoadingNews} news={news} />
     </HomepageWrapper>

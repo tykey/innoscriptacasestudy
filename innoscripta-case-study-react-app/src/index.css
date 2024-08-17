@@ -23,3 +23,7 @@ body {
   justify-content: start;
   flex: 0 0 100%;
 }
+
+input {
+  font-family: 'Raleway', sans-serif;
+}
