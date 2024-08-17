@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import {
   CHANGE_TRANSITION,
+  HOVER_TRANSITION,
   SLIDER_TRANSITION,
 } from '../../constants/transitions'
 import {
@@ -84,20 +85,26 @@ export const SingleNewsWrapper = styled.div`
   flex: 0 0 100%;
 `
 
-export const SingleNewsDiv = styled.div`
+export const ArticleDiv = styled.div`
   display: flex;
   width: 80%;
   height: 100%;
   flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  flex: 0 0 auto;
+  font-size: 1.2em;
+  gap: 15px;
+`
+
+export const ArticleHeaderDiv = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: start;
   align-items: start;
-  background-color: white;
-  color: black;
-  border-radius: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-  flex: 0 0 auto;
+  gap: 3px;
 `
+
 export const NavigationButtonsDiv = styled.div`
   position: relative;
   display: flex;
@@ -108,13 +115,13 @@ export const NavigationButtonsDiv = styled.div`
 `
 
 type PreviousSpanWrapperProps = {
-  isVisible: boolean
+  isDisabled: boolean
 }
 
 export const PreviousSpanWrapper = styled.div<PreviousSpanWrapperProps>`
-  position: absolute;
-  right: calc(100% + 10px);
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
-  transition: ${CHANGE_TRANSITION};
-  pointer-events: ${(props) => (props.isVisible ? 'all' : 'none')};
+  opacity: ${(props) => (props.isDisabled ? 0.5 : 1)};
+  transition: ${HOVER_TRANSITION};
+  pointer-events: ${(props) => (props.isDisabled ? 'none' : 'all')};
+  cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
+  user-select: none;
 `

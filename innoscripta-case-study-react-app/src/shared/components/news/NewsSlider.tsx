@@ -1,0 +1,137 @@
+import { useEffect, useRef, useState } from 'react'
+import {
+  BoldSpan,
+  DefaultSpan,
+  LoaderWrapperCentered,
+} from '../../styles/General.styled'
+import eng from '../../translations/eng'
+import CircularLoader from '../loaders/CircularLoader'
+import {
+  FadedDivLeft,
+  FadedDivRight,
+  NavigationButtonsDiv,
+  NewsWrapper,
+  PreviousSpanWrapper,
+  ArticleDiv,
+  SingleNewsWrapper,
+  SliderWrapper,
+  ArticleHeaderDiv,
+} from './NewsSlider.styled'
+import Progress from '../graphics/progress/Progress'
+import DefaultButton from '../buttons/defaultButton/DefaultButton'
+import { Article, NewsAPIOrgResponse } from '../../constants/types'
+
+type NewsSliderProps = {
+  isLoading: boolean
+  news: NewsAPIOrgResponse
+}
+
+const NewsSlider = ({ isLoading, news }: NewsSliderProps) => {
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+
+  const [currentNewsIndex, setCurrentNewsIndex] = useState<number>(0)
+  const sliderRef = useRef(null)
+
+  const onClickNext = () => {
+    setCurrentNewsIndex((prev) =>
+      prev < news.articles.length ? prev + 1 : prev
+    )
+  }
+
+  const onClickPrevious = () => {
+    setCurrentNewsIndex((prev) => (prev > 0 ? prev - 1 : prev))
+  }
+
+  const onClickSpecificNews = (clickedIndex: number) => {
+    setCurrentNewsIndex(clickedIndex)
+  }
+
+  const moveSlider = () => {
+    if (!(sliderRef && sliderRef.current)) return
+
+    const elem = sliderRef.current
+    elem.style.right = `${currentNewsIndex * 100}%`
+  }
+
+  const onClickSubscribe = () => {
+    alert('Subscribe')
+  }
+
+  useEffect(() => {
+    moveSlider()
+  }, [currentNewsIndex])
+
+  useEffect(() => {
+    if (isLoading) {
+      setCurrentNewsIndex(0)
+      setIsVisible(false)
+    } else {
+      setTimeout(() => {
+        setIsVisible(!isLoading)
+      }, 200)
+    }
+  }, [isLoading])
+
+  if (isLoading)
+    return (
+      <LoaderWrapperCentered>
+        <CircularLoader loadingText={eng.components.news.loading} />
+      </LoaderWrapperCentered>
+    )
+
+  return (
+    <NewsWrapper isVisible={isVisible}>
+      <FadedDivLeft />
+      <FadedDivRight />
+      <SliderWrapper ref={sliderRef}>
+        {news?.articles.map((article: Article, articleIndex: number) => {
+          return (
+            <SingleNewsWrapper key={articleIndex}>
+              <ArticleDiv>
+                <ArticleHeaderDiv>
+                  <BoldSpan>{article.title}</BoldSpan>
+                  <DefaultSpan>
+                    {`${article.source ? `${article.source.name} - ` : ''} ${new Date(article.publishedAt).toLocaleDateString()}`}
+                  </DefaultSpan>
+                </ArticleHeaderDiv>
+                <DefaultSpan
+                  dangerouslySetInnerHTML={{ __html: article.content }}
+                />
+              </ArticleDiv>
+            </SingleNewsWrapper>
+          )
+        })}
+        <SingleNewsWrapper key="subscription">
+          <ArticleDiv>
+            <BoldSpan>{eng.components.news.max_news}</BoldSpan>
+            <DefaultButton
+              text={eng.components.news.subscribe}
+              onClick={onClickSubscribe}
+            />
+          </ArticleDiv>
+        </SingleNewsWrapper>
+      </SliderWrapper>
+      {news && (
+        <Progress
+          numberOfElements={news.articles.length + 1}
+          selectedIndex={currentNewsIndex}
+          onClick={onClickSpecificNews}
+        />
+      )}
+      <NavigationButtonsDiv>
+        <PreviousSpanWrapper isDisabled={currentNewsIndex === 0}>
+          <DefaultSpan fontSize="0.9em" onClick={onClickPrevious}>
+            {eng.navigation.previous}
+          </DefaultSpan>
+        </PreviousSpanWrapper>
+        <DefaultButton
+          text={eng.navigation.next}
+          onClick={onClickNext}
+          isDisabled={currentNewsIndex === news.articles.length}
+        />
+      </NavigationButtonsDiv>
+    </NewsWrapper>
+  )
+}
+
+export default NewsSlider

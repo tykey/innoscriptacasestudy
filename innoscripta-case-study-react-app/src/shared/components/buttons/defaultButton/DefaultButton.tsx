@@ -15,7 +15,11 @@ const DefaultButton = ({
   isDisabled,
 }: DefaultButtonProps) => {
   return (
-    <DefaultButtonStyled onClick={onClick} fontSize={fontSize}>
+    <DefaultButtonStyled
+      onClick={onClick}
+      fontSize={fontSize}
+      isDisabled={isDisabled}
+    >
       {text}
     </DefaultButtonStyled>
   )

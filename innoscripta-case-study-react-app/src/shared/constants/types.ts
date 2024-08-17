@@ -8,38 +8,24 @@ export type Section = {
   code: string
 }
 
-export type News = {
-  title: string
-  date: Date
+export type SourceNewsAPIOrg = {
+  id: string
+  name: string
 }
 
-export const TEST_NEWS: News[] = [
-  {
-    title: 'Test news 1',
-    date: new Date(),
-  },
-  {
-    title: 'Test news 2',
-    date: new Date(),
-  },
-  {
-    title: 'Test news 3',
-    date: new Date(),
-  },
-  {
-    title: 'Test news 4',
-    date: new Date(),
-  },
-  {
-    title: 'Test news 5',
-    date: new Date(),
-  },
-  {
-    title: 'Test news 6',
-    date: new Date(),
-  },
-  {
-    title: 'Test news 7',
-    date: new Date(),
-  },
-]
+export type Article = {
+  author?: string
+  content?: string
+  description?: string
+  publishedAt: Date
+  source?: SourceNewsAPIOrg
+  title: string
+  url: string
+  urlToImage?: string
+}
+
+export type NewsAPIOrgResponse = {
+  articles: Article[]
+  status: string
+  totalResults: number
+}

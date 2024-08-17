@@ -8,6 +8,8 @@ const eng = {
   components: {
     news: {
       loading: 'Loading news...',
+      max_news: `You have reached the maximum number of news. Subscribe to our plan to get access to unlimited number of news!`,
+      subscribe: 'Subscribe',
     },
   },
   navigation: {
