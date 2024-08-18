@@ -181,3 +181,16 @@ export const RemoveIconDiv = styled.div`
     }
   }
 `
+
+export const HiddenInput = styled.input`
+  appearance: none;
+  border: none;
+  height: 0;
+  width: 0;
+  position: absolute;
+  opacity: 0;
+
+  &:focus {
+    outline: none;
+  }
+`

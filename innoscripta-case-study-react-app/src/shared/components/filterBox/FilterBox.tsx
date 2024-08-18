@@ -10,6 +10,7 @@ import {
   FilterSectionVertical,
   FilterSectionVerticalOptions,
 } from './FilterBox.styled'
+import MultiSelectMultiple from '../input/multiSelect/MultiSelectMultiple'
 
 type FilterBoxProps = {
   isVisible: boolean
@@ -33,9 +34,36 @@ const SORT_BY_OPTIONS: SelectOption<string>[] = [
   },
 ]
 
+const CATEGORY_OPTIONS: SelectOption<string>[] = [
+  {
+    label: 'Sports',
+    code: 'sports',
+    selectIndex: 0,
+  },
+  {
+    label: 'Other',
+    code: 'other',
+    selectIndex: 1,
+  },
+  {
+    label: 'Other2',
+    code: 'other2',
+    selectIndex: 2,
+  },
+  {
+    label: 'Other3',
+    code: 'other3',
+    selectIndex: 3,
+  },
+]
+
 const FilterBox = ({ isVisible }: FilterBoxProps) => {
   const [selectedSortByOptionIndex, setSelectedSortByOptionIndex] =
     useState<number>(0)
+
+  const [selectedCategoriesIndices, setSelectedCategoriesIndices] = useState<
+    number[]
+  >([])
 
   return (
     <FilterBoxWrapper isVisible={isVisible}>
@@ -55,6 +83,44 @@ const FilterBox = ({ isVisible }: FilterBoxProps) => {
               setSelectedSortByOptionIndex(selectedOption.selectIndex)
             }}
             selectedIndex={selectedSortByOptionIndex}
+          />
+        </FilterSectionVerticalOptions>
+      </FilterSectionVertical>
+      <FilterSectionVertical>
+        <FilterSectionHeader>
+          <BoldSpan>{eng.components.filter_box.categories}</BoldSpan>
+        </FilterSectionHeader>
+        <FilterSectionVerticalOptions>
+          <MultiSelectMultiple
+            fieldIndex={0}
+            fieldCodigo={''}
+            options={CATEGORY_OPTIONS}
+            onClick={(selectedOption: SelectOption<any>) => {
+              const selIndex = selectedOption.selectIndex
+              const indexOf = selectedCategoriesIndices.indexOf(selIndex)
+
+              if (indexOf === -1) {
+                // add
+                setSelectedCategoriesIndices((prev) => [...prev, selIndex])
+              } else {
+                // remove
+                setSelectedCategoriesIndices((prev) => [
+                  ...prev.slice(0, indexOf),
+                  ...prev.slice(indexOf + 1),
+                ])
+              }
+            }}
+            onRemove={(
+              removeIndex: number,
+              removedOption: SelectOption<any>
+            ) => {
+              setSelectedCategoriesIndices((prev) => [
+                ...prev.slice(0, removeIndex),
+                ...prev.slice(removeIndex + 1),
+              ])
+            }}
+            selectedIndices={selectedCategoriesIndices}
+            noneSelectedMessage={eng.components.filter_box.all_categories}
           />
         </FilterSectionVerticalOptions>
       </FilterSectionVertical>
