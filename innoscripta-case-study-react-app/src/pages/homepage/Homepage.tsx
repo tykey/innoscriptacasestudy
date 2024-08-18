@@ -21,6 +21,7 @@ import {
   getTrendingHeadlinesAxios,
 } from '../../shared/apis/newsapiorg/http'
 import {
+  NewsAPIOrgFilter,
   NewsAPIOrgResponse,
   Section,
   SourceNewsAPIOrg,
@@ -69,6 +70,11 @@ const EMPTY_NEWS: NewsAPIOrgResponse = {
   status: 'err',
 }
 
+const INITIAL_NEWS_API_ORG_FILTERS: NewsAPIOrgFilter = {
+  sortBy: 'publishedAt',
+  sources: null,
+}
+
 const Homepage = () => {
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number>(0)
 
@@ -89,11 +95,16 @@ const Homepage = () => {
   const [searchInput, setSearchInput] = useState<string>('')
   const inputRef = useRef(null)
 
+  // filters
+  const [filters, setFilters] = useState<NewsAPIOrgFilter>(
+    INITIAL_NEWS_API_ORG_FILTERS
+  )
+
   // filter box
   const [showFilterBox, setShowFilterBox] = useState<boolean>(false)
 
   const getTrendingNews = () => {
-    getEverythingAxios(sources, NUMBER_OF_ARTICLES, SORT_BY)
+    getEverythingAxios(filters.sources ?? sources, NUMBER_OF_ARTICLES, SORT_BY)
       .then((res: any) => {
         console.log(res.data)
         setNews(res.data)
@@ -167,12 +178,27 @@ const Homepage = () => {
     }
   }
 
+  const onClickApplyFilters = (
+    sortBy?: string,
+    sources?: SourceNewsAPIOrg[]
+  ) => {
+    if (SECTIONS[selectedSectionIndex].code === 'trending') {
+      const newFilters: NewsAPIOrgFilter = {
+        sortBy: sortBy,
+        sources: sources,
+      }
+
+      setFilters(newFilters)
+    }
+
+    setShowFilterBox(false)
+  }
+
   const getSources = () => {
     setIsLoadingSources(true)
 
     getSourcesAxios()
       .then((res: any) => {
-        console.log(res.data.sources)
         setSources(res.data.sources)
       })
       .catch(() => {})
@@ -195,7 +221,7 @@ const Homepage = () => {
 
   useEffect(() => {
     if (sources.length > 0) getNews()
-  }, [selectedSectionIndex, sources])
+  }, [selectedSectionIndex, sources, filters])
 
   // focus search
   useEffect(() => {
@@ -256,6 +282,7 @@ const Homepage = () => {
         }
         news={news}
         showFilterBox={showFilterBox}
+        onClickApplyFilters={onClickApplyFilters}
       />
     </HomepageWrapper>
   )

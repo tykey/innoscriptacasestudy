@@ -37,6 +37,7 @@ type NewsSliderProps = {
   sources: SourceNewsAPIOrg[]
   news: NewsAPIOrgResponse
   showFilterBox: boolean
+  onClickApplyFilters: (sortBy?: string, sources?: SourceNewsAPIOrg[]) => void
 }
 
 const NewsSlider = ({
@@ -47,6 +48,7 @@ const NewsSlider = ({
   sources,
   news,
   showFilterBox,
+  onClickApplyFilters,
 }: NewsSliderProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
@@ -105,6 +107,7 @@ const NewsSlider = ({
         allowsCategories={allowsCategories}
         isLoadingCategories={isLoadingCategories}
         categories={categories}
+        onClickApply={onClickApplyFilters}
       />
       {isLoading ? (
         <LoaderWrapperCentered>

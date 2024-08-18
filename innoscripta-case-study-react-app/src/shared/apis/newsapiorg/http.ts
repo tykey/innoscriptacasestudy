@@ -33,11 +33,12 @@ export const getEverythingAxios = (
   numberOfArticles: number,
   sortBy: string
 ) => {
-  let sourcesParam: string = `${sources[0].id},`
-  for (let i = 1; i < sources.length - 1; i++) {
+  let sourcesParam: string = ''
+  for (let i = 0; i < sources.length; i++) {
     sourcesParam = `${sourcesParam}${sources[i].id},`
   }
-  sourcesParam = `${sourcesParam}${sources[sources.length - 1].id}`
+  // remove comma
+  sourcesParam = sourcesParam.slice(0, sourcesParam.length)
 
   return axios.get(GET_EVERYTHING_PATH, {
     params: {

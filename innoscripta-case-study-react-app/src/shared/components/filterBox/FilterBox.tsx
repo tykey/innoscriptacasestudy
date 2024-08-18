@@ -25,6 +25,7 @@ type FilterBoxProps = {
   allowsCategories: boolean
   isLoadingCategories: boolean
   categories: TheGuardianCategory[]
+  onClickApply: (sortBy?: string, sources?: SourceNewsAPIOrg[]) => void
 }
 
 const SORT_BY_OPTIONS: SelectOption<string>[] = [
@@ -35,7 +36,7 @@ const SORT_BY_OPTIONS: SelectOption<string>[] = [
   },
   {
     label: 'Most recent',
-    code: 'recent',
+    code: 'publishedAt',
     selectIndex: 1,
   },
 ]
@@ -46,6 +47,7 @@ const FilterBox = ({
   allowsCategories,
   isLoadingCategories,
   categories,
+  onClickApply,
 }: FilterBoxProps) => {
   const [selectedSortByOptionIndex, setSelectedSortByOptionIndex] =
     useState<number>(0)
@@ -56,8 +58,19 @@ const FilterBox = ({
     number[]
   >([])
 
-  const onClickApply = () => {
-    alert('apply')
+  const onClickApplyFilter = () => {
+    const filteredSortBy: string =
+      SORT_BY_OPTIONS[selectedSortByOptionIndex].code
+
+    let filteredSources: SourceNewsAPIOrg[] = null
+    if (selectedSourcesIndices.length > 0) {
+      filteredSources = []
+      selectedSourcesIndices.forEach((sourceIndex: number) => {
+        filteredSources.push(sources[sourceIndex])
+      })
+    }
+
+    onClickApply(filteredSortBy, filteredSources)
   }
 
   return (
@@ -162,7 +175,7 @@ const FilterBox = ({
       <FilterApplyDiv>
         <DefaultButton
           text={eng.components.filter_box.apply}
-          onClick={onClickApply}
+          onClick={onClickApplyFilter}
         />
       </FilterApplyDiv>
     </FilterBoxWrapper>

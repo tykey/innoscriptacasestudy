@@ -47,3 +47,8 @@ export type TheGuardianCategory = {
   id: string
   webTitle: string
 }
+
+export type NewsAPIOrgFilter = {
+  sortBy?: string
+  sources?: SourceNewsAPIOrg[]
+}
