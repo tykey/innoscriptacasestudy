@@ -23,6 +23,7 @@ import DefaultButton from '../buttons/defaultButton/DefaultButton'
 import {
   Article,
   NewsAPIOrgResponse,
+  Section,
   SourceNewsAPIOrg,
   TheGuardianCategory,
 } from '../../constants/types'
@@ -31,18 +32,22 @@ import FilterBox from '../filterBox/FilterBox'
 
 type NewsSliderProps = {
   isLoading: boolean
-  allowsCategories: boolean
+  selectedSection: Section
   isLoadingCategories: boolean
   categories: TheGuardianCategory[]
   sources: SourceNewsAPIOrg[]
   news: NewsAPIOrgResponse
   showFilterBox: boolean
-  onClickApplyFilters: (sortBy?: string, sources?: SourceNewsAPIOrg[]) => void
+  onClickApplyFilters: (
+    sortBy?: string,
+    sources?: SourceNewsAPIOrg[],
+    category?: TheGuardianCategory
+  ) => void
 }
 
 const NewsSlider = ({
   isLoading,
-  allowsCategories,
+  selectedSection,
   isLoadingCategories,
   categories,
   sources,
@@ -103,8 +108,8 @@ const NewsSlider = ({
       <FadedDivRight />
       <FilterBox
         isVisible={showFilterBox}
+        selectedSection={selectedSection}
         sources={sources}
-        allowsCategories={allowsCategories}
         isLoadingCategories={isLoadingCategories}
         categories={categories}
         onClickApply={onClickApplyFilters}

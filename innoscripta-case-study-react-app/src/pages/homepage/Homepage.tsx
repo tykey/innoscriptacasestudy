@@ -47,16 +47,19 @@ const SECTIONS: Section[] = [
   {
     label: 'Trending',
     code: 'trending',
+    allowsSortBy: true,
     allowsCategories: false,
   },
   {
     label: 'The Guardian',
     code: 'theguardian',
+    allowsSortBy: false,
     allowsCategories: true,
   },
   {
     label: 'The New York Times',
     code: 'nytimes',
+    allowsSortBy: true,
     allowsCategories: false,
   },
 ]
@@ -133,7 +136,7 @@ const Homepage = () => {
   }
 
   const getTheGuardianNews = () => {
-    getAllTheGuardianAxios(NUMBER_OF_ARTICLES)
+    getAllTheGuardianAxios(NUMBER_OF_ARTICLES, filters.category)
       .then((res: any) => {
         setNews(mapTheGuardianNewsToNews(res.data.response))
       })
@@ -180,17 +183,23 @@ const Homepage = () => {
 
   const onClickApplyFilters = (
     sortBy?: string,
-    sources?: SourceNewsAPIOrg[]
+    sources?: SourceNewsAPIOrg[],
+    category?: TheGuardianCategory
   ) => {
+    let newFilters: NewsAPIOrgFilter = {}
+
     if (SECTIONS[selectedSectionIndex].code === 'trending') {
-      const newFilters: NewsAPIOrgFilter = {
+      newFilters = {
         sortBy: sortBy,
         sources: sources,
       }
-
-      setFilters(newFilters)
+    } else if (SECTIONS[selectedSectionIndex].code === 'theguardian') {
+      newFilters = {
+        category: category,
+      }
     }
 
+    setFilters(newFilters)
     setShowFilterBox(false)
   }
 
@@ -274,7 +283,7 @@ const Homepage = () => {
       </HomepageHeader>
       <NewsSlider
         isLoading={isLoadingNews}
-        allowsCategories={SECTIONS[selectedSectionIndex].allowsCategories}
+        selectedSection={SECTIONS[selectedSectionIndex]}
         isLoadingCategories={isLoadingCategories}
         categories={theGuardianCategories}
         sources={

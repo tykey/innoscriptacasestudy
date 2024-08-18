@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  Section,
   SelectOption,
   SourceNewsAPIOrg,
   TheGuardianCategory,
@@ -22,10 +23,14 @@ import DefaultButton from '../buttons/defaultButton/DefaultButton'
 type FilterBoxProps = {
   isVisible: boolean
   sources: SourceNewsAPIOrg[]
-  allowsCategories: boolean
+  selectedSection: Section
   isLoadingCategories: boolean
   categories: TheGuardianCategory[]
-  onClickApply: (sortBy?: string, sources?: SourceNewsAPIOrg[]) => void
+  onClickApply: (
+    sortBy?: string,
+    sources?: SourceNewsAPIOrg[],
+    category?: TheGuardianCategory
+  ) => void
 }
 
 const SORT_BY_OPTIONS: SelectOption<string>[] = [
@@ -44,7 +49,7 @@ const SORT_BY_OPTIONS: SelectOption<string>[] = [
 const FilterBox = ({
   isVisible,
   sources,
-  allowsCategories,
+  selectedSection,
   isLoadingCategories,
   categories,
   onClickApply,
@@ -59,8 +64,9 @@ const FilterBox = ({
   >([])
 
   const onClickApplyFilter = () => {
-    const filteredSortBy: string =
-      SORT_BY_OPTIONS[selectedSortByOptionIndex].code
+    let filteredSortBy: string = undefined
+    if (selectedSortByOptionIndex > -1)
+      filteredSortBy = SORT_BY_OPTIONS[selectedSortByOptionIndex].code
 
     let filteredSources: SourceNewsAPIOrg[] = null
     if (selectedSourcesIndices.length > 0) {
@@ -70,7 +76,10 @@ const FilterBox = ({
       })
     }
 
-    onClickApply(filteredSortBy, filteredSources)
+    let category: TheGuardianCategory = undefined
+    if (selectedCategoryIndex > -1) category = categories[selectedCategoryIndex]
+
+    onClickApply(filteredSortBy, filteredSources, category)
   }
 
   return (
@@ -79,22 +88,24 @@ const FilterBox = ({
         <BoldSpan fontSize="1.1em">{eng.components.filter_box.header}</BoldSpan>
       </FilterHeader>
       <FilterSectionsWrapper>
-        <FilterSectionVertical>
-          <FilterSectionHeader>
-            <BoldSpan>{eng.components.filter_box.sort_by}</BoldSpan>
-          </FilterSectionHeader>
-          <FilterSectionVerticalOptions>
-            <MultiSelect
-              fieldIndex={0}
-              fieldCodigo={''}
-              options={SORT_BY_OPTIONS}
-              onChange={(selectedOption: SelectOption<any>) => {
-                setSelectedSortByOptionIndex(selectedOption.selectIndex)
-              }}
-              selectedIndex={selectedSortByOptionIndex}
-            />
-          </FilterSectionVerticalOptions>
-        </FilterSectionVertical>
+        {selectedSection.allowsSortBy && (
+          <FilterSectionVertical>
+            <FilterSectionHeader>
+              <BoldSpan>{eng.components.filter_box.sort_by}</BoldSpan>
+            </FilterSectionHeader>
+            <FilterSectionVerticalOptions>
+              <MultiSelect
+                fieldIndex={0}
+                fieldCodigo={''}
+                options={SORT_BY_OPTIONS}
+                onChange={(selectedOption: SelectOption<any>) => {
+                  setSelectedSortByOptionIndex(selectedOption.selectIndex)
+                }}
+                selectedIndex={selectedSortByOptionIndex}
+              />
+            </FilterSectionVerticalOptions>
+          </FilterSectionVertical>
+        )}
         {sources.length > 0 && (
           <FilterSectionVertical>
             <FilterSectionHeader>
@@ -142,7 +153,7 @@ const FilterBox = ({
             </FilterSectionVerticalOptions>
           </FilterSectionVertical>
         )}
-        {allowsCategories && (
+        {selectedSection.allowsCategories && (
           <FilterSectionVertical>
             <FilterSectionHeader>
               <BoldSpan>{eng.components.filter_box.category}</BoldSpan>

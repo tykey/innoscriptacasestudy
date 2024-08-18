@@ -6,6 +6,7 @@ export type Country = {
 export type Section = {
   label: string
   code: string
+  allowsSortBy: boolean
   allowsCategories: boolean
 }
 
@@ -51,4 +52,5 @@ export type TheGuardianCategory = {
 export type NewsAPIOrgFilter = {
   sortBy?: string
   sources?: SourceNewsAPIOrg[]
+  category?: TheGuardianCategory
 }
