@@ -11,11 +11,11 @@ import {
 } from '../../constants/dimensions'
 import { INNO_MAIN_COLOR } from '../../constants/colors'
 
-type NewsWrapperProps = {
+type VisibilityProps = {
   isVisible: boolean
 }
 
-export const NewsWrapper = styled.div<NewsWrapperProps>`
+export const NewsWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -25,8 +25,6 @@ export const NewsWrapper = styled.div<NewsWrapperProps>`
   height: 80%;
   gap: 20px;
   flex: 1 0 auto;
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
-  transition: ${CHANGE_TRANSITION};
   overflow-x: hidden;
 `
 
@@ -60,7 +58,12 @@ export const FadedDivRight = styled.div`
   );
 `
 
-export const SliderWrapper = styled.div`
+export const VisibilityWrapper = styled.div<VisibilityProps>`
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: ${CHANGE_TRANSITION};
+`
+
+export const SliderWrapper = styled.div<VisibilityProps>`
   position: relative;
   right: 0;
   display: flex;
@@ -71,7 +74,10 @@ export const SliderWrapper = styled.div`
   width: calc(100% - ${SLIDER_FAKE_PADDING_HORIZONTAL});
   flex: 0 1 auto;
   gap: 10px;
-  transition: ${SLIDER_TRANSITION};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition:
+    opacity 0.2s ease-out,
+    0.4s ease-in-out;
   z-index: 20;
 `
 
@@ -105,13 +111,15 @@ export const ArticleHeaderDiv = styled.div`
   gap: 4px;
 `
 
-export const NavigationButtonsDiv = styled.div`
+export const NavigationButtonsDiv = styled.div<VisibilityProps>`
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 20px;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: ${CHANGE_TRANSITION};
 `
 
 type PreviousSpanWrapperProps = {

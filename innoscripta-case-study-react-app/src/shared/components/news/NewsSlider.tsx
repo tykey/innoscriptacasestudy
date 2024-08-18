@@ -16,6 +16,7 @@ import {
   SingleNewsWrapper,
   SliderWrapper,
   ArticleHeaderDiv,
+  VisibilityWrapper,
 } from './NewsSlider.styled'
 import Progress from '../graphics/progress/Progress'
 import DefaultButton from '../buttons/defaultButton/DefaultButton'
@@ -75,69 +76,72 @@ const NewsSlider = ({ isLoading, news, showFilterBox }: NewsSliderProps) => {
     }
   }, [isLoading])
 
-  if (isLoading)
-    return (
-      <LoaderWrapperCentered>
-        <CircularLoader loadingText={eng.components.news.loading} />
-      </LoaderWrapperCentered>
-    )
-
   return (
-    <NewsWrapper isVisible={isVisible}>
+    <NewsWrapper>
       <FadedDivLeft />
       <FadedDivRight />
       <FilterBox isVisible={showFilterBox} />
-      <SliderWrapper ref={sliderRef}>
-        {news?.articles.map((article: Article, articleIndex: number) => {
-          return (
-            <SingleNewsWrapper key={articleIndex}>
+      {isLoading ? (
+        <LoaderWrapperCentered>
+          <CircularLoader loadingText={eng.components.news.loading} />
+        </LoaderWrapperCentered>
+      ) : (
+        <>
+          <SliderWrapper ref={sliderRef} isVisible={isVisible}>
+            {news?.articles?.map((article: Article, articleIndex: number) => {
+              return (
+                <SingleNewsWrapper key={articleIndex}>
+                  <ArticleDiv>
+                    <ArticleHeaderDiv>
+                      <BoldSpan>{article.title}</BoldSpan>
+                      <DefaultSpan fontSize="0.9em">
+                        {`${article.source.name} - ${new Date(article.publishedAt).toLocaleDateString()}`}
+                      </DefaultSpan>
+                    </ArticleHeaderDiv>
+                    <DefaultButton
+                      text={eng.components.news.view_full_article(
+                        article.source.name
+                      )}
+                      onClick={() => redirectToUrl(article.url)}
+                      fontSize="0.9em"
+                    />
+                  </ArticleDiv>
+                </SingleNewsWrapper>
+              )
+            })}
+            <SingleNewsWrapper key="subscription">
               <ArticleDiv>
-                <ArticleHeaderDiv>
-                  <BoldSpan>{article.title}</BoldSpan>
-                  <DefaultSpan fontSize="0.9em">
-                    {`${article.source.name} - ${new Date(article.publishedAt).toLocaleDateString()}`}
-                  </DefaultSpan>
-                </ArticleHeaderDiv>
+                <BoldSpan>{eng.components.news.max_news}</BoldSpan>
                 <DefaultButton
-                  text={eng.components.news.view_full_article(
-                    article.source.name
-                  )}
-                  onClick={() => redirectToUrl(article.url)}
-                  fontSize="0.9em"
+                  text={eng.components.news.subscribe}
+                  onClick={onClickSubscribe}
                 />
               </ArticleDiv>
             </SingleNewsWrapper>
-          )
-        })}
-        <SingleNewsWrapper key="subscription">
-          <ArticleDiv>
-            <BoldSpan>{eng.components.news.max_news}</BoldSpan>
+          </SliderWrapper>
+          {news && (
+            <VisibilityWrapper isVisible={isVisible}>
+              <Progress
+                numberOfElements={news.articles?.length + 1}
+                selectedIndex={currentNewsIndex}
+                onClick={onClickSpecificNews}
+              />
+            </VisibilityWrapper>
+          )}
+          <NavigationButtonsDiv isVisible={isVisible}>
+            <PreviousSpanWrapper isDisabled={currentNewsIndex === 0}>
+              <DefaultSpan fontSize="0.9em" onClick={onClickPrevious}>
+                {eng.navigation.previous}
+              </DefaultSpan>
+            </PreviousSpanWrapper>
             <DefaultButton
-              text={eng.components.news.subscribe}
-              onClick={onClickSubscribe}
+              text={eng.navigation.next}
+              onClick={onClickNext}
+              isDisabled={currentNewsIndex === news?.articles?.length}
             />
-          </ArticleDiv>
-        </SingleNewsWrapper>
-      </SliderWrapper>
-      {news && (
-        <Progress
-          numberOfElements={news.articles.length + 1}
-          selectedIndex={currentNewsIndex}
-          onClick={onClickSpecificNews}
-        />
+          </NavigationButtonsDiv>
+        </>
       )}
-      <NavigationButtonsDiv>
-        <PreviousSpanWrapper isDisabled={currentNewsIndex === 0}>
-          <DefaultSpan fontSize="0.9em" onClick={onClickPrevious}>
-            {eng.navigation.previous}
-          </DefaultSpan>
-        </PreviousSpanWrapper>
-        <DefaultButton
-          text={eng.navigation.next}
-          onClick={onClickNext}
-          isDisabled={currentNewsIndex === news.articles.length}
-        />
-      </NavigationButtonsDiv>
     </NewsWrapper>
   )
 }

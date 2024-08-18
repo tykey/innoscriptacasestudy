@@ -37,5 +37,7 @@ export const LoaderWrapperCentered = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100%;
   flex: 1 0 auto;
+  position: absolute;
 `
