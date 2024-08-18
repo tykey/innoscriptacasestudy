@@ -4,6 +4,9 @@ const eng = {
       welcome: 'Welcome to Innoscripta News',
       select_country: 'Please, select your country:',
     },
+    homepage: {
+      from_partners: 'From our partners:',
+    },
   },
   components: {
     news: {
@@ -12,6 +15,13 @@ const eng = {
       subscribe: 'Subscribe',
       view_full_article: (sourceName: string) =>
         `View full article on ${sourceName}'s website`,
+    },
+    filter_box: {
+      header: 'Filters',
+      sort_by: 'Sort by',
+    },
+    multi_select: {
+      no_results: 'No results',
     },
   },
   navigation: {

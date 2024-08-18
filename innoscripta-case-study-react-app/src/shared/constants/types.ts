@@ -29,3 +29,14 @@ export type NewsAPIOrgResponse = {
   status: string
   totalResults: number
 }
+
+export type SearchFilter = {
+  keywords: string
+  sortBy: string
+}
+
+export type SelectOption<T> = {
+  label: string
+  code: T
+  selectIndex: number
+}

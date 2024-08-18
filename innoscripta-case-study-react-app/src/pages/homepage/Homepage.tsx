@@ -34,6 +34,7 @@ import ManualInput from '../../shared/components/input/manualInput/ManualInput'
 import SearchIcon from '../../shared/assets/icons/search.svg'
 import FilterIcon from '../../shared/assets/icons/filter.svg'
 import FilterBox from '../../shared/components/filterBox/FilterBox'
+import eng from '../../shared/translations/eng'
 
 const SECTIONS: Section[] = [
   {
@@ -179,13 +180,20 @@ const Homepage = () => {
         <HomepageSectionsDiv>
           {SECTIONS.map((section: Section, sectionIndex: number) => {
             return (
-              <HomepageHeaderButton
-                key={sectionIndex}
-                isSelected={sectionIndex === selectedSectionIndex}
-                onClick={() => setSelectedSectionIndex(sectionIndex)}
-              >
-                {section.label}
-              </HomepageHeaderButton>
+              <>
+                <HomepageHeaderButton
+                  key={sectionIndex}
+                  isSelected={sectionIndex === selectedSectionIndex}
+                  onClick={() => setSelectedSectionIndex(sectionIndex)}
+                >
+                  {section.label}
+                </HomepageHeaderButton>
+                {sectionIndex === 0 && (
+                  <DefaultSpan style={{ marginLeft: '15px' }}>
+                    {eng.pages.homepage.from_partners}
+                  </DefaultSpan>
+                )}
+              </>
             )
           })}
         </HomepageSectionsDiv>

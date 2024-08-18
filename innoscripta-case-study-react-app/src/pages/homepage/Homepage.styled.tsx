@@ -36,7 +36,9 @@ export const HomepageSectionsDiv = styled.div`
   flex-direction: row;
   justify-content: start;
   align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
+  flex: 1;
 `
 
 type HomepageHeaderButtonProps = {
@@ -69,6 +71,7 @@ export const SearchWrapper = styled.div`
   align-items: center;
   gap: 20px;
   color: white;
+  flex: 1;
 `
 
 type HiddenWrapperProps = {

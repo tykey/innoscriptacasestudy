@@ -5,7 +5,7 @@ import {
   LoaderWrapperCentered,
 } from '../../styles/General.styled'
 import eng from '../../translations/eng'
-import CircularLoader from '../loaders/CircularLoader'
+import CircularLoader from '../loaders/circularLoader/CircularLoader'
 import {
   FadedDivLeft,
   FadedDivRight,
