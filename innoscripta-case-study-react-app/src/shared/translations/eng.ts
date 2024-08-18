@@ -15,6 +15,8 @@ const eng = {
       subscribe: 'Subscribe',
       view_full_article: (sourceName: string) =>
         `View full article on ${sourceName}'s website`,
+      no_articles: 'No articles seem to match your search...',
+      reset_filters: 'Reset filters',
     },
     filter_box: {
       header: 'Filters',

@@ -43,6 +43,7 @@ type NewsSliderProps = {
     sources?: SourceNewsAPIOrg[],
     category?: TheGuardianCategory
   ) => void
+  onClickResetFilters: () => void
 }
 
 const NewsSlider = ({
@@ -54,6 +55,7 @@ const NewsSlider = ({
   news,
   showFilterBox,
   onClickApplyFilters,
+  onClickResetFilters,
 }: NewsSliderProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
@@ -142,17 +144,26 @@ const NewsSlider = ({
                 </SingleNewsWrapper>
               )
             })}
-            <SingleNewsWrapper key="subscription">
-              <ArticleDiv>
-                <BoldSpan>{eng.components.news.max_news}</BoldSpan>
-                <DefaultButton
-                  text={eng.components.news.subscribe}
-                  onClick={onClickSubscribe}
-                />
-              </ArticleDiv>
-            </SingleNewsWrapper>
+            {news?.articles?.length > 0 && (
+              <SingleNewsWrapper key="subscription">
+                <ArticleDiv>
+                  <BoldSpan>{eng.components.news.max_news}</BoldSpan>
+                  <DefaultButton
+                    text={eng.components.news.subscribe}
+                    onClick={onClickSubscribe}
+                  />
+                </ArticleDiv>
+              </SingleNewsWrapper>
+            )}
+            {news?.articles?.length === 0 && (
+              <SingleNewsWrapper key="no_articles">
+                <ArticleDiv>
+                  <BoldSpan>{eng.components.news.no_articles}</BoldSpan>
+                </ArticleDiv>
+              </SingleNewsWrapper>
+            )}
           </SliderWrapper>
-          {news && (
+          {news && news?.articles?.length > 0 && (
             <VisibilityWrapper isVisible={isVisible}>
               <Progress
                 numberOfElements={news.articles?.length + 1}
@@ -161,18 +172,28 @@ const NewsSlider = ({
               />
             </VisibilityWrapper>
           )}
-          <NavigationButtonsDiv isVisible={isVisible}>
-            <PreviousSpanWrapper isDisabled={currentNewsIndex === 0}>
-              <DefaultSpan fontSize="0.9em" onClick={onClickPrevious}>
-                {eng.navigation.previous}
-              </DefaultSpan>
-            </PreviousSpanWrapper>
-            <DefaultButton
-              text={eng.navigation.next}
-              onClick={onClickNext}
-              isDisabled={currentNewsIndex === news?.articles?.length}
-            />
-          </NavigationButtonsDiv>
+          {news?.articles?.length > 0 && (
+            <NavigationButtonsDiv isVisible={isVisible}>
+              <PreviousSpanWrapper isDisabled={currentNewsIndex === 0}>
+                <DefaultSpan fontSize="0.9em" onClick={onClickPrevious}>
+                  {eng.navigation.previous}
+                </DefaultSpan>
+              </PreviousSpanWrapper>
+              <DefaultButton
+                text={eng.navigation.next}
+                onClick={onClickNext}
+                isDisabled={currentNewsIndex === news?.articles?.length}
+              />
+            </NavigationButtonsDiv>
+          )}
+          {news?.articles?.length === 0 && (
+            <NavigationButtonsDiv isVisible>
+              <DefaultButton
+                text={eng.components.news.reset_filters}
+                onClick={onClickResetFilters}
+              />
+            </NavigationButtonsDiv>
+          )}
         </>
       )}
     </NewsWrapper>

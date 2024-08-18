@@ -42,6 +42,7 @@ import SearchIcon from '../../shared/assets/icons/search.svg'
 import FilterIcon from '../../shared/assets/icons/filter.svg'
 import FilterBox from '../../shared/components/filterBox/FilterBox'
 import eng from '../../shared/translations/eng'
+import { useDebounce } from '@uidotdev/usehooks'
 
 const SECTIONS: Section[] = [
   {
@@ -99,6 +100,7 @@ const Homepage = () => {
   // search
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [searchInput, setSearchInput] = useState<string>('')
+  const debouncedSearch = useDebounce(searchInput, 500)
   const inputRef = useRef(null)
 
   // filters
@@ -110,7 +112,12 @@ const Homepage = () => {
   const [showFilterBox, setShowFilterBox] = useState<boolean>(false)
 
   const getTrendingNews = () => {
-    getEverythingAxios(filters.sources ?? sources, NUMBER_OF_ARTICLES, SORT_BY)
+    getEverythingAxios(
+      filters.sources ?? sources,
+      NUMBER_OF_ARTICLES,
+      SORT_BY,
+      searchInput
+    )
       .then((res: any) => {
         console.log(res.data)
         setNews(res.data)
@@ -184,6 +191,11 @@ const Homepage = () => {
     }
   }
 
+  const onClickResetFilters = () => {
+    setFilters(INITIAL_NEWS_API_ORG_FILTERS)
+    setShowSearch(false)
+  }
+
   const onClickApplyFilters = (
     sortBy?: string,
     sources?: SourceNewsAPIOrg[],
@@ -233,7 +245,7 @@ const Homepage = () => {
 
   useEffect(() => {
     if (sources.length > 0) getNews()
-  }, [selectedSectionIndex, sources, filters])
+  }, [selectedSectionIndex, sources, filters, debouncedSearch])
 
   // focus search
   useEffect(() => {
@@ -293,6 +305,7 @@ const Homepage = () => {
         news={news}
         showFilterBox={showFilterBox}
         onClickApplyFilters={onClickApplyFilters}
+        onClickResetFilters={onClickResetFilters}
       />
     </HomepageWrapper>
   )

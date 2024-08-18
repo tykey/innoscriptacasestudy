@@ -31,7 +31,8 @@ export const getSourcesAxios = () => {
 export const getEverythingAxios = (
   sources: SourceNewsAPIOrg[],
   numberOfArticles: number,
-  sortBy: string
+  sortBy: string,
+  keywords?: string
 ) => {
   let sourcesParam: string = ''
   for (let i = 0; i < sources.length; i++) {
@@ -42,6 +43,7 @@ export const getEverythingAxios = (
 
   return axios.get(GET_EVERYTHING_PATH, {
     params: {
+      q: keywords,
       sources: sourcesParam,
       pageSize: numberOfArticles,
       sortBy: sortBy,
