@@ -50,8 +50,13 @@ export type TheGuardianCategory = {
   webTitle: string
 }
 
-export type NewsAPIOrgFilter = {
+export type Filters = {
   sortBy?: string
   sources?: SourceNewsAPIOrg[]
   category?: TheGuardianCategory
+}
+
+export type User = {
+  username: string
+  filterPreferences: Filters
 }

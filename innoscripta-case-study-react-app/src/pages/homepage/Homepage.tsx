@@ -21,7 +21,7 @@ import {
   getTrendingHeadlinesAxios,
 } from '../../shared/apis/newsapiorg/http'
 import {
-  NewsAPIOrgFilter,
+  Filters,
   NewsAPIOrgResponse,
   Section,
   SourceNewsAPIOrg,
@@ -77,7 +77,7 @@ const EMPTY_NEWS: NewsAPIOrgResponse = {
   status: 'err',
 }
 
-const INITIAL_NEWS_API_ORG_FILTERS: NewsAPIOrgFilter = {
+const INITIAL_NEWS_API_ORG_FILTERS: Filters = {
   sortBy: 'publishedAt',
   sources: null,
 }
@@ -104,9 +104,7 @@ const Homepage = () => {
   const inputRef = useRef(null)
 
   // filters
-  const [filters, setFilters] = useState<NewsAPIOrgFilter>(
-    INITIAL_NEWS_API_ORG_FILTERS
-  )
+  const [filters, setFilters] = useState<Filters>(INITIAL_NEWS_API_ORG_FILTERS)
 
   // filter box
   const [showFilterBox, setShowFilterBox] = useState<boolean>(false)
@@ -201,7 +199,7 @@ const Homepage = () => {
     sources?: SourceNewsAPIOrg[],
     category?: TheGuardianCategory
   ) => {
-    let newFilters: NewsAPIOrgFilter = {}
+    let newFilters: Filters = {}
 
     if (SECTIONS[selectedSectionIndex].code === 'trending') {
       newFilters = {
