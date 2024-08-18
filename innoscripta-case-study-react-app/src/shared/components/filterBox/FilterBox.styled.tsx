@@ -10,6 +10,7 @@ type FilterBoxWrapperProps = {
 export const FilterBoxWrapper = styled.div<FilterBoxWrapperProps>`
   position: absolute;
   height: 100%;
+  max-height: 420px;
   width: min(${SIDEBAR_WIDTH}, 100%);
   right: ${(props) =>
     props.isVisible ? '10px' : `max(-${SIDEBAR_WIDTH}, -100%)`};
