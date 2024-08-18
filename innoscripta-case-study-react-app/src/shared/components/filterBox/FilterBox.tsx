@@ -106,7 +106,7 @@ const FilterBox = ({
             </FilterSectionVerticalOptions>
           </FilterSectionVertical>
         )}
-        {sources.length > 0 && (
+        {selectedSection.allowsSources && (
           <FilterSectionVertical>
             <FilterSectionHeader>
               <BoldSpan>{eng.components.filter_box.sources}</BoldSpan>
@@ -182,11 +182,25 @@ const FilterBox = ({
             </FilterSectionVerticalOptions>
           </FilterSectionVertical>
         )}
+        {!selectedSection.allowsSources &&
+          !selectedSection.allowsSortBy &&
+          !selectedSection.allowsCategories && (
+            <FilterSectionVertical>
+              <DefaultSpan style={{ lineHeight: 1.6 }}>
+                {eng.components.filter_box.no_filters}
+              </DefaultSpan>
+            </FilterSectionVertical>
+          )}
       </FilterSectionsWrapper>
       <FilterApplyDiv>
         <DefaultButton
           text={eng.components.filter_box.apply}
           onClick={onClickApplyFilter}
+          isDisabled={
+            !selectedSection.allowsSources &&
+            !selectedSection.allowsSortBy &&
+            !selectedSection.allowsCategories
+          }
         />
       </FilterApplyDiv>
     </FilterBoxWrapper>

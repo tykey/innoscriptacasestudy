@@ -24,6 +24,7 @@ const eng = {
       all_categories: 'All',
       all_sources: 'All',
       apply: 'Apply',
+      no_filters: 'No filters available for this section',
     },
     multi_select: {
       no_results: 'No results',

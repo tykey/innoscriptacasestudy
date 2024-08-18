@@ -6,6 +6,7 @@ export type Country = {
 export type Section = {
   label: string
   code: string
+  allowsSources: boolean
   allowsSortBy: boolean
   allowsCategories: boolean
 }

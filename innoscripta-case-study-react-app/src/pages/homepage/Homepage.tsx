@@ -47,19 +47,22 @@ const SECTIONS: Section[] = [
   {
     label: 'Trending',
     code: 'trending',
+    allowsSources: true,
     allowsSortBy: true,
     allowsCategories: false,
   },
   {
     label: 'The Guardian',
     code: 'theguardian',
+    allowsSources: false,
     allowsSortBy: false,
     allowsCategories: true,
   },
   {
     label: 'The New York Times',
     code: 'nytimes',
-    allowsSortBy: true,
+    allowsSources: false,
+    allowsSortBy: false,
     allowsCategories: false,
   },
 ]
@@ -286,9 +289,7 @@ const Homepage = () => {
         selectedSection={SECTIONS[selectedSectionIndex]}
         isLoadingCategories={isLoadingCategories}
         categories={theGuardianCategories}
-        sources={
-          SECTIONS[selectedSectionIndex].code === 'trending' ? sources : []
-        }
+        sources={SECTIONS[selectedSectionIndex].allowsSources ? sources : []}
         news={news}
         showFilterBox={showFilterBox}
         onClickApplyFilters={onClickApplyFilters}
