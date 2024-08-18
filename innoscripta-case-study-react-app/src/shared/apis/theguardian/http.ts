@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_ALL_NEWS_PATH } from './paths'
+import { GET_ALL_NEWS_PATH, GET_ALL_SECTIONS_PATH } from './paths'
 
 const API_KEY = process.env.THE_GUARDIAN_KEY
 
@@ -8,6 +8,14 @@ export const getAllTheGuardianAxios = (numberOfArticles: number) => {
     params: {
       'api-key': API_KEY,
       'page-size': numberOfArticles,
+    },
+  })
+}
+
+export const getTheGuardianSectionsAxios = () => {
+  return axios.get(GET_ALL_SECTIONS_PATH, {
+    params: {
+      'api-key': API_KEY,
     },
   })
 }

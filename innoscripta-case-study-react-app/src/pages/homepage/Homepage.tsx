@@ -20,9 +20,15 @@ import {
   getSourcesAxios,
   getTrendingHeadlinesAxios,
 } from '../../shared/apis/newsapiorg/http'
-import { NewsAPIOrgResponse, Section } from '../../shared/constants/types'
+import {
+  NewsAPIOrgResponse,
+  Section,
+  SourceNewsAPIOrg,
+  TheGuardianCategory,
+} from '../../shared/constants/types'
 import {
   getAllTheGuardianAxios,
+  getTheGuardianSectionsAxios,
   getTheGuardianSingleItem,
 } from '../../shared/apis/theguardian/http'
 import {
@@ -40,14 +46,17 @@ const SECTIONS: Section[] = [
   {
     label: 'Trending',
     code: 'trending',
+    allowsCategories: false,
   },
   {
     label: 'The Guardian',
     code: 'theguardian',
+    allowsCategories: true,
   },
   {
     label: 'The New York Times',
     code: 'nytimes',
+    allowsCategories: false,
   },
 ]
 
@@ -66,8 +75,14 @@ const Homepage = () => {
   // news fetching
   const [isLoadingSources, setIsLoadingSources] = useState<boolean>(true)
   const [isLoadingNews, setIsLoadingNews] = useState<boolean>(true)
-  const [sources, setSources] = useState<string[]>([])
+  const [sources, setSources] = useState<SourceNewsAPIOrg[]>([])
   const [news, setNews] = useState<NewsAPIOrgResponse>(null)
+
+  // the guardian
+  const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(false)
+  const [theGuardianCategories, setTheGuardianCategories] = useState<
+    TheGuardianCategory[]
+  >([])
 
   // search
   const [showSearch, setShowSearch] = useState<boolean>(false)
@@ -88,6 +103,21 @@ const Homepage = () => {
       })
       .finally(() => {
         setIsLoadingNews(false)
+      })
+  }
+
+  const getTheGuardianCategories = () => {
+    setIsLoadingCategories(true)
+
+    getTheGuardianSectionsAxios()
+      .then((res: any) => {
+        setTheGuardianCategories(res.data.response.results)
+      })
+      .catch(() => {
+        setTheGuardianCategories([])
+      })
+      .finally(() => {
+        setIsLoadingCategories(false)
       })
   }
 
@@ -126,6 +156,7 @@ const Homepage = () => {
         getTrendingNews()
         break
       case 'theguardian':
+        getTheGuardianCategories()
         getTheGuardianNews()
         break
       case 'nytimes':
@@ -141,7 +172,8 @@ const Homepage = () => {
 
     getSourcesAxios()
       .then((res: any) => {
-        setSources(res.data.sources?.map((source: any) => source.id))
+        console.log(res.data.sources)
+        setSources(res.data.sources)
       })
       .catch(() => {})
       .finally(() => {
@@ -180,7 +212,7 @@ const Homepage = () => {
         <HomepageSectionsDiv>
           {SECTIONS.map((section: Section, sectionIndex: number) => {
             return (
-              <>
+              <div key={sectionIndex}>
                 <HomepageHeaderButton
                   key={sectionIndex}
                   isSelected={sectionIndex === selectedSectionIndex}
@@ -193,7 +225,7 @@ const Homepage = () => {
                     {eng.pages.homepage.from_partners}
                   </DefaultSpan>
                 )}
-              </>
+              </div>
             )
           })}
         </HomepageSectionsDiv>
@@ -216,6 +248,12 @@ const Homepage = () => {
       </HomepageHeader>
       <NewsSlider
         isLoading={isLoadingNews}
+        allowsCategories={SECTIONS[selectedSectionIndex].allowsCategories}
+        isLoadingCategories={isLoadingCategories}
+        categories={theGuardianCategories}
+        sources={
+          SECTIONS[selectedSectionIndex].code === 'trending' ? sources : []
+        }
         news={news}
         showFilterBox={showFilterBox}
       />

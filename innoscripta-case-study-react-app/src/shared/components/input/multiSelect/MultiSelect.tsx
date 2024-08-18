@@ -32,6 +32,7 @@ type MultiSelectProps = {
   noGap?: boolean
   width?: string
   textAlign?: string
+  noneSelectedMessage?: string
 }
 const MultiSelect = ({
   fieldIndex,
@@ -48,6 +49,7 @@ const MultiSelect = ({
   noGap,
   width,
   textAlign,
+  noneSelectedMessage,
 }: MultiSelectProps) => {
   const ref = useRef<HTMLDivElement>()
   const [displayValue, setDisplayValue] = useState<string>('')
@@ -333,6 +335,11 @@ const MultiSelect = ({
             onFocus={handleOnFocus}
             data-testid={'multiSelectInput'}
             textAlign={textAlign}
+            placeholder={
+              selectedIndex === -1 && noneSelectedMessage
+                ? noneSelectedMessage
+                : undefined
+            }
           />
           <ChevronSvg />
         </ClosedView>

@@ -6,6 +6,7 @@ export type Country = {
 export type Section = {
   label: string
   code: string
+  allowsCategories: boolean
 }
 
 export type SourceNewsAPIOrg = {
@@ -39,4 +40,10 @@ export type SelectOption<T> = {
   label: string
   code: T
   selectIndex: number
+}
+
+export type TheGuardianCategory = {
+  apiUrl: string
+  id: string
+  webTitle: string
 }

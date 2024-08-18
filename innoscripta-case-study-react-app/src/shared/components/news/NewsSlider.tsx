@@ -20,17 +20,34 @@ import {
 } from './NewsSlider.styled'
 import Progress from '../graphics/progress/Progress'
 import DefaultButton from '../buttons/defaultButton/DefaultButton'
-import { Article, NewsAPIOrgResponse } from '../../constants/types'
+import {
+  Article,
+  NewsAPIOrgResponse,
+  SourceNewsAPIOrg,
+  TheGuardianCategory,
+} from '../../constants/types'
 import { redirectToUrl } from '../../constants/util'
 import FilterBox from '../filterBox/FilterBox'
 
 type NewsSliderProps = {
   isLoading: boolean
+  allowsCategories: boolean
+  isLoadingCategories: boolean
+  categories: TheGuardianCategory[]
+  sources: SourceNewsAPIOrg[]
   news: NewsAPIOrgResponse
   showFilterBox: boolean
 }
 
-const NewsSlider = ({ isLoading, news, showFilterBox }: NewsSliderProps) => {
+const NewsSlider = ({
+  isLoading,
+  allowsCategories,
+  isLoadingCategories,
+  categories,
+  sources,
+  news,
+  showFilterBox,
+}: NewsSliderProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
   const [currentNewsIndex, setCurrentNewsIndex] = useState<number>(0)
@@ -65,6 +82,8 @@ const NewsSlider = ({ isLoading, news, showFilterBox }: NewsSliderProps) => {
     moveSlider()
   }, [currentNewsIndex])
 
+  useEffect(() => {}, [])
+
   useEffect(() => {
     if (isLoading) {
       setCurrentNewsIndex(0)
@@ -80,7 +99,13 @@ const NewsSlider = ({ isLoading, news, showFilterBox }: NewsSliderProps) => {
     <NewsWrapper>
       <FadedDivLeft />
       <FadedDivRight />
-      <FilterBox isVisible={showFilterBox} />
+      <FilterBox
+        isVisible={showFilterBox}
+        sources={sources}
+        allowsCategories={allowsCategories}
+        isLoadingCategories={isLoadingCategories}
+        categories={categories}
+      />
       {isLoading ? (
         <LoaderWrapperCentered>
           <CircularLoader loadingText={eng.components.news.loading} />

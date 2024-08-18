@@ -44,12 +44,21 @@ export const FilterHeader = styled.div`
   font-size: 1.1em;
 `
 
+export const FilterSectionsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  flex: 1 0 auto;
+  gap: 20px;
+`
+
 export const FilterSectionVertical = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  gap: 10px;
+  gap: 5px;
   width: 100%;
   padding: 0 5px 0 5px;
   box-sizing: border-box;
@@ -67,5 +76,12 @@ export const FilterSectionVerticalOptions = styled.div`
 `
 
 export const FilterSectionHeader = styled.div`
+  width: 100%;
+`
+export const FilterApplyDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: end;
   width: 100%;
 `

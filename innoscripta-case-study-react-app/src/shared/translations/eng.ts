@@ -19,8 +19,11 @@ const eng = {
     filter_box: {
       header: 'Filters',
       sort_by: 'Sort by',
-      categories: 'Categories',
+      category: 'Category',
+      sources: 'Sources',
       all_categories: 'All',
+      all_sources: 'All',
+      apply: 'Apply',
     },
     multi_select: {
       no_results: 'No results',
