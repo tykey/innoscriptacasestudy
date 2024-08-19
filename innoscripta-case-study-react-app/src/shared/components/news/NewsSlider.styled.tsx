@@ -24,7 +24,7 @@ export const NewsWrapper = styled.div`
   width: 100%;
   height: 80%;
   gap: 20px;
-  flex: 1 0 auto;
+  flex: 1 1 auto;
   overflow-x: hidden;
 `
 
