@@ -50,6 +50,7 @@ const SECTIONS: Section[] = [
   {
     label: 'Trending',
     code: 'trending',
+    allowsKeywords: true,
     allowsSources: true,
     allowsSortBy: true,
     allowsCategories: false,
@@ -57,6 +58,7 @@ const SECTIONS: Section[] = [
   {
     label: 'The Guardian',
     code: 'theguardian',
+    allowsKeywords: false,
     allowsSources: false,
     allowsSortBy: false,
     allowsCategories: true,
@@ -64,6 +66,7 @@ const SECTIONS: Section[] = [
   {
     label: 'The New York Times',
     code: 'nytimes',
+    allowsKeywords: false,
     allowsSources: false,
     allowsSortBy: false,
     allowsCategories: false,
@@ -295,7 +298,11 @@ const Homepage = () => {
               onChange={(value: any) => setSearchInput(value)}
             />
           </HiddenWrapper>
-          <SearchIconWrapper onClick={onClickSearch} isClicked={showSearch}>
+          <SearchIconWrapper
+            onClick={onClickSearch}
+            isClicked={showSearch}
+            isVisible={SECTIONS[selectedSectionIndex].allowsKeywords}
+          >
             <SearchIcon />
           </SearchIconWrapper>
           <FilterIconWrapper onClick={onClickFilter}>

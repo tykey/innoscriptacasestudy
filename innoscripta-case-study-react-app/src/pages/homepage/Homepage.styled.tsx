@@ -84,13 +84,17 @@ export const HiddenWrapper = styled.div<HiddenWrapperProps>`
 `
 type SearchIconWrapperProps = {
   isClicked: boolean
+  isVisible: boolean
 }
 
 export const SearchIconWrapper = styled.div<SearchIconWrapperProps>`
   position: absolute;
-  cursor: pointer;
+  cursor: ${(props) => (props.isVisible ? 'pointer' : 'default')};
   right: 53px;
   z-index: 10;
+  transition: ${CHANGE_TRANSITION};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  pointer-events: ${(props) => (props.isVisible ? 'all' : 'none')};
 
   > svg {
     fill: ${(props) => (props.isClicked ? INNO_MAIN_COLOR : '#E9E9E9')};
