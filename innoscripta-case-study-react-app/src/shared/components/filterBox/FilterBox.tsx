@@ -129,8 +129,6 @@ const FilterBox = ({
 
   // set user preferences
   useEffect(() => {
-    console.log('sources', sources)
-
     setSelectedSortByOptionIndex(
       currentUserIndex === -1 ||
         !users[currentUserIndex].filterPreferences.sortBy

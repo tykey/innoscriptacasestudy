@@ -121,7 +121,6 @@ const Homepage = () => {
       searchInput
     )
       .then((res: any) => {
-        console.log(res.data)
         setNews(res.data)
       })
       .catch(() => {
@@ -258,9 +257,7 @@ const Homepage = () => {
     } else if (!showSearch) setSearchInput('')
   }, [showSearch])
 
-  useEffect(() => {
-    console.log('users', users)
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <HomepageWrapper>
