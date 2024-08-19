@@ -8,6 +8,8 @@ type ManualInputProps = {
   defaultValue?: string | number | readonly string[]
   onEnter?: () => void
   onFocus?: () => void
+  placeholder?: string
+  fontSize?: string
 }
 
 const ManualInput = ({
@@ -17,7 +19,13 @@ const ManualInput = ({
   defaultValue,
   onEnter,
   onFocus,
+  placeholder,
+  fontSize,
 }: ManualInputProps) => {
+  const handleKeyDown = (e: any) => {
+    if (e.key === 'Enter' && !!onEnter) onEnter()
+  }
+
   return (
     <InputWrapper>
       <InputDiv isDisabled={isDisabled}>
@@ -27,6 +35,9 @@ const ManualInput = ({
           value={defaultValue}
           onChange={(e: any) => onChange(e.currentTarget.value)}
           onFocus={onFocus}
+          placeholder={placeholder}
+          fontSize={fontSize}
+          onKeyDown={handleKeyDown}
         />
       </InputDiv>
     </InputWrapper>

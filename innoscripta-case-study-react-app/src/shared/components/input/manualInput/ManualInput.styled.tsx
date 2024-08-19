@@ -28,6 +28,7 @@ export const InputDiv = styled.div<ManualInputProps>`
 
 type ManualInputProps = {
   isDisabled?: boolean
+  fontSize?: string
 }
 
 export const InputStyled = styled.input<ManualInputProps>`
@@ -46,11 +47,12 @@ export const InputStyled = styled.input<ManualInputProps>`
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   outline: none;
   width: 100%;
+  font-size: ${(props) => props.fontSize ?? 'inherit'};
 
   &:focus {
     outline: none;
   }
   &::placeholder {
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, 0.8);
   }
 `

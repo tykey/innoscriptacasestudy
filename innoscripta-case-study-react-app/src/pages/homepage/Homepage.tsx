@@ -43,6 +43,8 @@ import FilterIcon from '../../shared/assets/icons/filter.svg'
 import FilterBox from '../../shared/components/filterBox/FilterBox'
 import eng from '../../shared/translations/eng'
 import { useDebounce } from '@uidotdev/usehooks'
+import { useSelector } from 'react-redux'
+import { IRootState } from '../../shared/store/store'
 
 const SECTIONS: Section[] = [
   {
@@ -83,6 +85,8 @@ const INITIAL_NEWS_API_ORG_FILTERS: Filters = {
 }
 
 const Homepage = () => {
+  const users = useSelector((state: IRootState) => state.usersSlice.value)
+
   const [selectedSectionIndex, setSelectedSectionIndex] = useState<number>(0)
 
   // news fetching
@@ -253,6 +257,10 @@ const Homepage = () => {
       inputElem.focus()
     } else if (!showSearch) setSearchInput('')
   }, [showSearch])
+
+  useEffect(() => {
+    console.log('users', users)
+  }, [])
 
   return (
     <HomepageWrapper>

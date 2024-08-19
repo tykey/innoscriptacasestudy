@@ -4,14 +4,14 @@ import { User } from '../constants/types'
 export const sessionSlice = createSlice({
   name: 'session',
   initialState: {
-    value: null as User,
+    value: -1,
   },
   reducers: {
-    loginUser: (state, action: { payload: User; type: string }) => {
+    loginUser: (state, action: { payload: number; type: string }) => {
       state.value = action.payload
     },
     logoutUser: (state, _action) => {
-      state.value = null
+      state.value = -1
     },
   },
 })

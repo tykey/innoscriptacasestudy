@@ -1,3 +1,5 @@
+import { ToastType } from '../components/toast/Toast'
+
 export type Country = {
   icon: any
   endpoint: string
@@ -59,4 +61,9 @@ export type Filters = {
 export type User = {
   username: string
   filterPreferences: Filters
+}
+
+export type ToastFunctions = {
+  show: (type: ToastType, message: string, delaySeconds?: number) => void
+  hide: () => void
 }

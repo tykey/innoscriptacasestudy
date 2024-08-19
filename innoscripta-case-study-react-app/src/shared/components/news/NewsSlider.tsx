@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   BoldSpan,
+  ClickableSpanWrapper,
   DefaultSpan,
   LoaderWrapperCentered,
 } from '../../styles/General.styled'
@@ -11,7 +12,6 @@ import {
   FadedDivRight,
   NavigationButtonsDiv,
   NewsWrapper,
-  PreviousSpanWrapper,
   ArticleDiv,
   SingleNewsWrapper,
   SliderWrapper,
@@ -174,11 +174,11 @@ const NewsSlider = ({
           )}
           {news?.articles?.length > 0 && (
             <NavigationButtonsDiv isVisible={isVisible}>
-              <PreviousSpanWrapper isDisabled={currentNewsIndex === 0}>
+              <ClickableSpanWrapper isDisabled={currentNewsIndex === 0}>
                 <DefaultSpan fontSize="0.9em" onClick={onClickPrevious}>
                   {eng.navigation.previous}
                 </DefaultSpan>
-              </PreviousSpanWrapper>
+              </ClickableSpanWrapper>
               <DefaultButton
                 text={eng.navigation.next}
                 onClick={onClickNext}

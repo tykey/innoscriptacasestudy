@@ -8,7 +8,7 @@ export const usersSlice = createSlice({
   },
   reducers: {
     addUser: (state, action: { payload: User; type: string }) => {
-      state.value = [...state.value, action.payload]
+      state.value = state.value.concat(action.payload)
     },
     changeUserFilters: (
       state,

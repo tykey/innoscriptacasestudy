@@ -5,3 +5,13 @@ export const INNO_SECONDARY_COLOR_DISABLED = '#38a09d70'
 export const INNO_MAIN_COLOR_FADED = '#2b6887'
 export const INNO_MAIN_TEXT_COLOR = 'white'
 export const HEADER_COLOR = 'white'
+
+/* TOAST */
+export const TOAST_GREY_COLOR = '#d3d3d3'
+export const TOAST_BLUE_COLOR = '#004481'
+export const TOAST_GREEN_COLOR = '#48AE64'
+export const TOAST_GREEN_LIGHT_COLOR = '#88CA9A'
+export const TOAST_BLUE_DARK_COLOR = '#072146'
+export const TOAST_RED_COLOR = '#DA3851'
+export const TOAST_RED_FADED_COLOR = '#f86f85'
+export const TOAST_WHITE_COLOR = '#FFFFFF'

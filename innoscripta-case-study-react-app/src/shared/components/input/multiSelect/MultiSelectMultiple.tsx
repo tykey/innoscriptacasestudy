@@ -244,20 +244,21 @@ const MultiSelectMultiple = ({
           <HiddenInput onKeyDown={handleKeyDown} onFocus={handleOnFocus} />
           <MultipleOptionsWrapper>
             {selectedIndices.map((index: number, removeIndex: number) => {
-              return (
-                <MultipleOption>
-                  <span>{options[index].label}</span>
-                  <RemoveIconDiv
-                    onClick={(e: any) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      onRemove(removeIndex, options[index])
-                    }}
-                  >
-                    <CloseIcon />
-                  </RemoveIconDiv>
-                </MultipleOption>
-              )
+              if (options[index])
+                return (
+                  <MultipleOption key={index}>
+                    <span>{options[index].label}</span>
+                    <RemoveIconDiv
+                      onClick={(e: any) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        onRemove(removeIndex, options[index])
+                      }}
+                    >
+                      <CloseIcon />
+                    </RemoveIconDiv>
+                  </MultipleOption>
+                )
             })}
             {selectedIndices.length === 0 && noneSelectedMessage && (
               <DefaultSpan>{noneSelectedMessage}</DefaultSpan>

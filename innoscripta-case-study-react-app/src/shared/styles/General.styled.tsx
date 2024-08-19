@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { INNO_MAIN_COLOR, INNO_MAIN_TEXT_COLOR } from '../constants/colors'
+import { HOVER_TRANSITION } from '../constants/transitions'
 
 export const GeneralWrapper = styled.div`
   width: 100%;
@@ -40,4 +41,20 @@ export const LoaderWrapperCentered = styled.div`
   height: 100%;
   flex: 1 0 auto;
   position: absolute;
+`
+
+type ClickableSpanWrapperProps = {
+  isDisabled?: boolean
+  color?: string
+  isHidden?: boolean
+}
+
+export const ClickableSpanWrapper = styled.div<ClickableSpanWrapperProps>`
+  opacity: ${(props) => (props.isDisabled ? 0.5 : 1)};
+  transition: ${HOVER_TRANSITION};
+  pointer-events: ${(props) => (props.isDisabled ? 'none' : 'all')};
+  cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
+  user-select: none;
+  color: ${(props) => props.color ?? 'inherit'};
+  visibility: ${(props) => (props.isHidden ? 'hidden' : 'none')};
 `

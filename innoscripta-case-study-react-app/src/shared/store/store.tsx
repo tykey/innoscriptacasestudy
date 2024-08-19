@@ -1,22 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { persistStore, persistReducer } from 'redux-persist'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { persistStore, persistReducer, createTransform } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import usersSlice from '../slices/usersSlice'
 import sessionSlice from '../slices/sessionSlice'
+import { User } from '../constants/types'
+import { version } from 'os'
 
 const persistConfig = {
   key: 'root',
   storage,
+  version: 1,
 }
 
-const persistedReducerUser = persistReducer(persistConfig, usersSlice)
-const persistedReducerSession = persistReducer(persistConfig, sessionSlice)
+const rootReducer = combineReducers({
+  usersSlice: usersSlice,
+  sessionSlice: sessionSlice,
+})
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-  reducer: {
-    users: persistedReducerUser,
-    session: persistedReducerSession,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

@@ -121,15 +121,3 @@ export const NavigationButtonsDiv = styled.div<VisibilityProps>`
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transition: ${CHANGE_TRANSITION};
 `
-
-type PreviousSpanWrapperProps = {
-  isDisabled: boolean
-}
-
-export const PreviousSpanWrapper = styled.div<PreviousSpanWrapperProps>`
-  opacity: ${(props) => (props.isDisabled ? 0.5 : 1)};
-  transition: ${HOVER_TRANSITION};
-  pointer-events: ${(props) => (props.isDisabled ? 'none' : 'all')};
-  cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
-  user-select: none;
-`

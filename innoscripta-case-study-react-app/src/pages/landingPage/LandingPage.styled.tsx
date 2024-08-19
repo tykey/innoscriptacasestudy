@@ -1,6 +1,4 @@
 import styled from '@emotion/styled'
-import { FLAGS_HEIGHT } from '../../shared/constants/dimensions'
-import { HOVER_TRANSITION } from '../../shared/constants/transitions'
 
 export const LandingPageWrapper = styled.div`
   width: 100%;
@@ -11,23 +9,16 @@ export const LandingPageWrapper = styled.div`
   align-items: center;
   gap: 15px;
 `
-export const FlagsWrapper = styled.div`
+export const LoginDiv = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: start;
   align-items: center;
-  gap: 30px;
-  flex-wrap: wrap;
+  gap: 0;
+  font-size: 1.6em;
   margin-top: 10px;
 
-  > svg {
-    cursor: pointer;
-    height: ${FLAGS_HEIGHT};
-    transform: scale(1);
-    transition: ${HOVER_TRANSITION};
-
-    &:hover {
-      transform: scale(1.2);
-    }
+  > button {
+    margin-top: 20px;
   }
 `

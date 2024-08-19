@@ -79,10 +79,10 @@ export const FilterSectionVerticalOptions = styled.div`
 export const FilterSectionHeader = styled.div`
   width: 100%;
 `
-export const FilterApplyDiv = styled.div`
+export const FilterFooterDiv = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: end;
-  align-items: end;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
 `

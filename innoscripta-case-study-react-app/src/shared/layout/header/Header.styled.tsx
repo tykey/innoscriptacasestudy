@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { HEADER_COLOR } from '../../constants/colors'
+import { HEADER_COLOR, INNO_MAIN_COLOR } from '../../constants/colors'
 import { HEADER_HEIGHT } from '../../constants/dimensions'
 
 export const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   padding: 20px;
   height: ${HEADER_HEIGHT};
@@ -16,5 +16,21 @@ export const HeaderWrapper = styled.div`
 
   > svg {
     height: 100%;
+  }
+`
+
+export const LoginInfoDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+`
+
+export const LogoutWrapper = styled.div`
+  > svg {
+    cursor: pointer;
+    width: 24px;
+    fill: ${INNO_MAIN_COLOR};
   }
 `

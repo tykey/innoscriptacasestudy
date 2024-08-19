@@ -27,3 +27,12 @@ body {
 input {
   font-family: 'Raleway', sans-serif;
 }
+
+@keyframes toastBackground {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}

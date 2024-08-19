@@ -2,7 +2,9 @@ const eng = {
   pages: {
     landing_page: {
       welcome: 'Welcome to Innoscripta News',
-      select_country: 'Please, select your country:',
+      username_placeholder: 'Insert username',
+      enter: (username: string) => `Continue as ${username}`,
+      continue_no_user: 'Or continue anonymously',
     },
     homepage: {
       from_partners: 'From our partners:',
@@ -27,12 +29,18 @@ const eng = {
       all_sources: 'All',
       apply: 'Apply',
       no_filters: 'No filters available for this section',
+      save: 'Save preferences',
+      save_success: 'Filter preferences saved successfully',
     },
     multi_select: {
       no_results: 'No results',
     },
     multi_select_multiple: {
       add_option: 'Add',
+    },
+    header: {
+      logged_in_as: (username: string) => `Logged in as ${username}`,
+      not_logged_in: 'Login',
     },
   },
   navigation: {
