@@ -39,7 +39,7 @@ const eng = {
       add_option: 'Add',
     },
     header: {
-      logged_in_as: (username: string) => `Logged in as ${username}`,
+      logged_in_as: (username: string) => `${username}`,
       not_logged_in: 'Login',
     },
   },

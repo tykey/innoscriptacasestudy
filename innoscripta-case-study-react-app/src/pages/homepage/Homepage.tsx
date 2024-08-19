@@ -263,9 +263,19 @@ const Homepage = () => {
     <HomepageWrapper>
       <HomepageHeader>
         <HomepageSectionsDiv>
+          {
+            <HomepageHeaderButton
+              key={0}
+              isSelected={0 === selectedSectionIndex}
+              onClick={() => setSelectedSectionIndex(0)}
+            >
+              {SECTIONS[0].label}
+            </HomepageHeaderButton>
+          }
+          <DefaultSpan noWrap>{eng.pages.homepage.from_partners}</DefaultSpan>
           {SECTIONS.map((section: Section, sectionIndex: number) => {
-            return (
-              <div key={sectionIndex}>
+            if (sectionIndex > 0)
+              return (
                 <HomepageHeaderButton
                   key={sectionIndex}
                   isSelected={sectionIndex === selectedSectionIndex}
@@ -273,13 +283,7 @@ const Homepage = () => {
                 >
                   {section.label}
                 </HomepageHeaderButton>
-                {sectionIndex === 0 && (
-                  <DefaultSpan style={{ marginLeft: '15px' }}>
-                    {eng.pages.homepage.from_partners}
-                  </DefaultSpan>
-                )}
-              </div>
-            )
+              )
           })}
         </HomepageSectionsDiv>
         <SearchWrapper>

@@ -17,6 +17,7 @@ type SpanProps = {
   fontSize?: string
   color?: string
   cursor?: string
+  noWrap?: boolean
 }
 
 export const DefaultSpan = styled.span<SpanProps>`
@@ -24,6 +25,7 @@ export const DefaultSpan = styled.span<SpanProps>`
   color: ${(props) => props.color ?? 'inherit'};
   cursor: ${(props) => props.cursor ?? 'inherit'};
   font-weight: 400;
+  white-space: ${(props) => (props.noWrap ? 'nowrap' : 'inherit')};
 `
 
 export const BoldSpan = styled.span<SpanProps>`
@@ -31,6 +33,7 @@ export const BoldSpan = styled.span<SpanProps>`
   color: ${(props) => props.color ?? 'inherit'};
   cursor: ${(props) => props.cursor ?? 'inherit'};
   font-weight: 600;
+  white-space: ${(props) => (props.noWrap ? 'nowrap' : 'inherit')};
 `
 export const LoaderWrapperCentered = styled.div`
   display: flex;

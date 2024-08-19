@@ -26,7 +26,7 @@ export const HomepageHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
